@@ -4,6 +4,7 @@ const passport = require('passport');
 module.exports.register = function(req, res){
     Patient.findOne({phone: req.body.phone}, function(err, patient){
         // finding patient if present
+        console.log(err);
         if (!patient){
             Patient.create(req.body, function(err, patient){
                 if(err){
