@@ -11,10 +11,6 @@ const reportSchema = mongoose.Schema(
     status: {
       type: String,
     },
-
-    date: {
-      type: Date,
-    },
   },
   {
     timeStamps: true,
