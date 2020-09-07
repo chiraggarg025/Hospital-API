@@ -7,6 +7,7 @@ let opts = {
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
   secretOrKey: "hospital",
 };
+// using passport jwt
 passport.use(
   new JWTStrategy(opts, function (jwtPayload, done) {
     Doctor.findById(jwtPayload._id, function (error, doctor) {
@@ -22,6 +23,7 @@ passport.use(
     });
   })
 );
+// serialize the user
 passport.serializeUser(function (doctor, done) {
   done(null, doctor);
 });

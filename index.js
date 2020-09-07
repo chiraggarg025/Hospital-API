@@ -1,3 +1,4 @@
+// requiring packages
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
@@ -8,6 +9,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const passportJWT = require("./config/passport-jwt-strategy");
 app.use(express.urlencoded());
+// setting up session for a user
 app.use(
   session({
     name: "HospitalSession",
@@ -32,11 +34,12 @@ app.use(
     ),
   })
 );
+// passport configuration
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
 app.use("/", require("./routes"));
-
+// port to listen
 app.listen(port , function(err){
     if (err){
         console.log(`Error in running the server: ${err}`);

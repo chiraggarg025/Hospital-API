@@ -1,4 +1,6 @@
+// mongoose configuration for the database 
 const mongoose=require('mongoose');
+// connecting to db
 mongoose.connect('mongodb://localhost/HospitalAPI');
 const db=mongoose.connection;
 db.on('error', console.error.bind(console, "Error on Connecting DB"));

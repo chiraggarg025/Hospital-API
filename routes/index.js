@@ -1,5 +1,5 @@
 const express = require('express');
-
+// router configuration
 const router = express.Router();
 const homeController = require('../controllers/home_controller');
 

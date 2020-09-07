@@ -13,6 +13,7 @@ module.exports.createReport = function(req,res){
                 message:"No Patient with ID found"
             })
         }
+        // creating a report for a patient
         Report.create({
             doctor:doctor.name,
             patient:patient.name,
@@ -53,6 +54,7 @@ module.exports.getPatientReport = async function(req,res){
         if(patient){
             let all_report = [];
             for(let i=0;i<patient.reports.length;i++){
+                // fetching report accordingly
                 const report = await Report.findById(patient.reports[i]);
                 if(report){
                     let single_report = new Object();
@@ -78,7 +80,7 @@ module.exports.getPatientReport = async function(req,res){
     
 }
 
-// fuction to fetch reports of patients with respect to status
+// function to fetch reports of patients with respect to status
 
 module.exports.filterReports = async function(req,res){
     try {
