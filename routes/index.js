@@ -11,6 +11,7 @@ router.get('/',homeController.home );
 router.use('/doctors',require('./doctor'));
 // for routes related to patient
 router.use('/patients',require('./patient'));
-
+// routes for reports
+router.use('/reports',require('./reports'));
 
 module.exports = router;

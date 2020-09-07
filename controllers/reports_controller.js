@@ -1,5 +1,6 @@
 const Report = require('../models/patient_report');
 const Patient = require('../models/patient');
+const e = require('express');
 // function to create a new report
 module.exports.createReport = function(req,res){
     const { passport } = req.session;
@@ -29,7 +30,8 @@ module.exports.createReport = function(req,res){
             return res.json(200,{
                 message:"Report created Successfully",
                 details:{
-                    doctor:doctor,
+                    doctor:doctor.name,
+                    doctorEmail:doctor.email,
                     patient:patient.name,
                     status:report.status,
                     createdAt:report.createdAt
@@ -57,18 +59,51 @@ module.exports.getPatientReport = async function(req,res){
                     single_report.doctor = report.doctor;
                     single_report.patient = report.patient;
                     single_report.status = report.status;
-                    single_report.createdAt = report.createdAt;
+                    single_report.testedOn = report.createdAt;
                     all_report.push(single_report);
                 }
             }
             res.json(200,{
+                message: `All Reports For ${patient.name}`,
+                numberOfTimesTested:patient.reports.length,
                 reports:all_report
             })
         }
         
     } catch (error) {
-        console.log(error);
-        return;
+        return res.jason(422,{
+            message:"Internal Server Error"
+        })
     }
     
+}
+
+// fuction to fetch reports of patients with respect to status
+
+module.exports.filterReports = async function(req,res){
+    try {
+        let requestedStatus=req.params.status;
+        let allReports = await Report.find({status:requestedStatus});
+        const reportArray = [];
+        for (let i of allReports) {
+          const { doctor, patient, createdAt, status } = i;
+          const reportObject = {
+            Doctor: doctor,
+            Patient: patient,
+            TestedOn: createdAt,
+            Status: status,
+          };
+          reportArray.push(reportObject);
+        }
+        return res.status(200).send({
+          message: `Reports with Status : ${requestedStatus}`,
+          report: reportArray,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.json(422,{
+            message:"Internal Server error"
+        })
+    }
 }
