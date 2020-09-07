@@ -18,7 +18,7 @@ passport.use(
       if (doctor) {
         return done(null, doctor);
       } else {
-        return res.json(401,{message:"Unautharized"})
+        return done(error,null);
       }
     });
   })
