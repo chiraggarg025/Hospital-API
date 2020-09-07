@@ -13,7 +13,11 @@ module.exports.register = function(req, res){
                     })
                 }else{
                     return res.json(200,{
-                        message:'Registration Successful'
+                        message:'Registration Successful',
+                        details:{
+                            name:doctor.name,
+                            email:doctor.email
+                        }
                     })
                 }
 
@@ -21,7 +25,10 @@ module.exports.register = function(req, res){
         }else{
             return res.json(409,{
                 message:'User already exists',
-                details:doctor
+                details:{
+                    name:doctor.name,
+                    email:doctor.email
+                }
             })
         }
 
@@ -41,7 +48,7 @@ module.exports.createSession = async function(req,res){
         return res.json(200,{
             message:"Sign in successful,here is your token, please keep it safe",
             data:{
-                token:jwt.sign(doctor.toJSON(),'hospital',{expiresIn:'100000'})
+                token:jwt.sign(doctor.toJSON(),'hospital',{expiresIn:'7000000'})
             }
         })
 

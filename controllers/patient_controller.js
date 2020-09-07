@@ -1,4 +1,5 @@
-const Patient = require('../models/patient')
+const Patient = require('../models/patient');
+const passport = require('passport');
 // register the new patient
 module.exports.register = function(req, res){
     Patient.findOne({phone: req.body.phone}, function(err, patient){
@@ -8,11 +9,15 @@ module.exports.register = function(req, res){
                 if(err){
                     console.log(`Error in creating patient:${error}`)
                     return res.json(409,{
-                        message:'Error in creating user'
+                        message:'Error in creating patient'
                     })
                 }else{
                     return res.json(200,{
-                        message:'Registration Successful'
+                        message:'Registration Successful',
+                        details:{
+                            name :patient.name,
+                            phone : patient.phone
+                        }
                     })
                 }
 
@@ -20,7 +25,10 @@ module.exports.register = function(req, res){
         }else{
             return res.json(409,{
                 message:'User already exists',
-                details:patient 
+                details:{
+                    name : patient.name,
+                    phone:patient.phone
+                } 
             })
         }
 

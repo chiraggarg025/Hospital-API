@@ -17,13 +17,11 @@ passport.use(
       if (doctor) {
         return done(null, doctor);
       } else {
-        return done(null, false);
+        return res.json(401,{message:"Unautharized"})
       }
     });
   })
 );
-
-// passport serialize user
 passport.serializeUser(function (doctor, done) {
   done(null, doctor);
 });
@@ -31,15 +29,21 @@ passport.serializeUser(function (doctor, done) {
 passport.deserializeUser(function (id, done) {
   Doctor.findById(id, function (error, doctor) {
     if (error) {
-      console.log("Error in finding user -->> passport");
+      console.log("Error in finding user -->> passpoer");
       return done(error);
     }
     return done(null, doctor);
   });
 });
+
 // check user authentication
 passport.checkAuthentication = function (req, res, next) {
-  return next();
+  if (req.isAuthenticated()){
+    return next();
+  }
+  return res.json(401,{
+    message:"Unautherized"
+  });
 };
 // set authentication
 passport.setAuthenticatedUser = function (req, res, next) {
