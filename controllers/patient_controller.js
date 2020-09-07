@@ -12,6 +12,7 @@ module.exports.register = function(req, res){
                         message:'Error in creating patient'
                     })
                 }else{
+                    console.log('here')
                     return res.json(200,{
                         message:'Registration Successful',
                         details:{

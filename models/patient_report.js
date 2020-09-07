@@ -13,7 +13,7 @@ const reportSchema = mongoose.Schema(
     },
   },
   {
-    timeStamps: true,
+    timestamps: true,
   }
 );
 const Report = mongoose.model("Report", reportSchema);

@@ -18,7 +18,7 @@ const patientSchema = mongoose.Schema(
     ],
   },
   {
-    timeStamps: true,
+    timestamps: true,
   }
 );
 const Patient = mongoose.model("Patient", patientSchema);

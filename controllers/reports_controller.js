@@ -27,7 +27,12 @@ module.exports.createReport = function(req,res){
             patient.save();
             return res.json(200,{
                 message:"Report created Successfully",
-                details:report
+                details:{
+                    doctor:doctor,
+                    patient:patient.name,
+                    status:report.status,
+                    createdAt:report.createdAt
+                }
             });
         })
 
