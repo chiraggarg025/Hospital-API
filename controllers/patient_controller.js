@@ -1,12 +1,12 @@
-const Doctor = require('../models/doctor')
-// register the doctor
+const Patient = require('../models/patient')
+// register the new patient
 module.exports.register = function(req, res){
-    Doctor.findOne({email: req.body.email}, function(err, doctor){
+    Patient.findOne({phone: req.body.phone}, function(err, patient){
         
-        if (!doctor){
-            Doctor.create(req.body, function(err, doctor){
+        if (!patient){
+            Patient.create(req.body, function(err, patient){
                 if(err){
-                    console.log(`Error in creating doctor:${error}`)
+                    console.log(`Error in creating patient:${error}`)
                     return res.json(409,{
                         message:'Error in creating user'
                     })
@@ -20,7 +20,7 @@ module.exports.register = function(req, res){
         }else{
             return res.json(409,{
                 message:'User already exists',
-                details:doctor
+                details:patient 
             })
         }
 
