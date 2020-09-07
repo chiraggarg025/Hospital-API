@@ -10,5 +10,6 @@ const passport = require('passport');
 router.post('/register',passport.authenticate('jwt',{session:false}),patientController.register );
 // route to create a patients report
 router.post('/:id/create_report',passport.authenticate('jwt',{session:true}),reportsController.createReport);
-
+// route to watch all reports of a patient
+router.post('/:id/all_reports',reportsController.getPatientReport);
 module.exports = router;

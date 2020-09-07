@@ -23,6 +23,7 @@ module.exports.createReport = function(req,res){
                     message:"Internal Server Error"
                 })
             }
+            // saving report in patients info
             patient.reports.push(report);
             patient.save();
             return res.json(200,{
@@ -37,5 +38,37 @@ module.exports.createReport = function(req,res){
         })
 
     })
+    
+}
+
+// function to ge all reports for a given patient
+module.exports.getPatientReport = async function(req,res){
+
+    try {
+        const patient = await   Patient.findById(req.params.id);
+        
+        
+        if(patient){
+            let all_report = [];
+            for(let i=0;i<patient.reports.length;i++){
+                const report = await Report.findById(patient.reports[i]);
+                if(report){
+                    let single_report = new Object();
+                    single_report.doctor = report.doctor;
+                    single_report.patient = report.patient;
+                    single_report.status = report.status;
+                    single_report.createdAt = report.createdAt;
+                    all_report.push(single_report);
+                }
+            }
+            res.json(200,{
+                reports:all_report
+            })
+        }
+        
+    } catch (error) {
+        console.log(error);
+        return;
+    }
     
 }
