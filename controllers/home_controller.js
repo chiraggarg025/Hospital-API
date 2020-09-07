@@ -1,6 +1,6 @@
 module.exports.home = function(req,res){
     return res.json(200,{
-        message:"List of report",
+        message:"Welcome to Doctor's App",
         
     })
 }

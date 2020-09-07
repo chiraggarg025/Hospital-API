@@ -5,13 +5,13 @@ const Doctor = require("../models/doctor");
 
 let opts = {
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-  secretOrKey: "SecretKEY",
+  secretOrKey: "hospital",
 };
 passport.use(
   new JWTStrategy(opts, function (jwtPayload, done) {
     Doctor.findById(jwtPayload._id, function (error, doctor) {
       if (error) {
-        console.log("ERror in finding user Using JWT");
+        console.log("Error in finding user Using JWT");
         return;
       }
       if (doctor) {
